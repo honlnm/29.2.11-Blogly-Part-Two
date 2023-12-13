@@ -12,7 +12,7 @@ class UserTestCase(TestCase):
     def setUp(self):
         """clear the table contents and add user"""
         with app.app_context():
-            User.query.delete()
+            db.create_all()
             db.session.commit()
             user = User(first_name="John", last_name="Doe")
             db.session.add(user)
@@ -24,6 +24,8 @@ class UserTestCase(TestCase):
         """clear up all transactions"""
         with app.app_context():
             db.session.rollback()
+            db.drop_all()
+            db.commit()
 
     def test_showUsers(self):
         with app.test_client() as client:
@@ -52,4 +54,37 @@ class UserTestCase(TestCase):
             html = res.get_data(as_text=True)
 
         self.assertEqual(res.status_code, 302)
+
+class PostTestCase(TestCase):
+    """test model for posts"""
+
+    def setUp(self):
+        """clear the table contents and add user"""
+        with app.app_context():
+            db.create_all()
+            db.session.commit()
+            user = User(first_name="John", last_name="Doe")
+            db.session.add(user)
+            db.session.commit()
+        self.app = app.test_client()
+        self.app.testing = True
+
+    def tearDown(self):
+        """clear up all transactions"""
+        with app.app_context():
+            db.session.rollback()
+            db.drop_all()
+            db.commit()
+
+    def postForm(self):
     
+    def addPost(self):
+
+    def showPost(self):
+
+    def postEditForm(self):
+
+    def editPost(self):
+
+    def deletePost(self):
+
