@@ -136,7 +136,7 @@ def display_post(postId):
 @app.route('/posts/<int:postId>/edit', methods=['POST'])
 def edit_post(postId):
     """edit selected post"""
-    post = User.query.get(postId)
+    post = Post.query.get(postId)
     user = User.query.get_or_404(post.user_id)
     title = request.form["title"]
     content = request.form["content"]
